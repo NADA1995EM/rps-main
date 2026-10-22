@@ -1,0 +1,525 @@
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg-dark:        #0f0c1d;
+  --bg-card:        #1a1630;
+  --bg-card-light:  #241f45;
+  --purple:         #7c5cbf;
+  --purple-light:   #a67fe8;
+  --accent:         #f7c948;
+  --accent-coral:   #ff6b6b;
+  --accent-blue:    #6ec6ff;
+  --text-main:      #f0eaff;
+  --text-muted:     #8b82b0;
+  --border:         rgba(255,255,255,0.08);
+  --radius:         18px;
+  --transition:     0.35s ease;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  min-height: 100vh;
+
+  /* Subtle mesh gradient background */
+  background-image:
+    radial-gradient(ellipse at 20% 20%, rgba(124,92,191,0.25) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 80%, rgba(110,198,255,0.15) 0%, transparent 55%);
+    background-repeat: no-repeat;
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.site-header {
+  text-align: center;
+  padding: 2.5rem 1rem 1rem;
+}
+
+.site-title {
+  font-size: 2.4rem;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, var(--purple-light), var(--accent));
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.site-subtitle {
+  margin-top: 0.4rem;
+  color: var(--text-muted);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+
+.game-container {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+
+.scoreboard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.2rem 2rem;
+  gap: 1rem;
+}
+
+.score-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  transition: transform var(--transition);
+}
+
+
+.score-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+}
+
+.score-number {
+  font-size: 3rem;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--text-main);
+}
+
+#player-score-card .score-number { color: var(--purple-light); }
+#computer-score-card .score-number { color: var(--accent-coral); }
+
+.round-tracker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.round-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.round-number {
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--accent);
+}
+
+.battle-area {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem 2rem;
+}
+
+.battle-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  flex: 1;
+}
+
+.battle-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+}
+
+.battle-image-wrapper {
+  position: relative;
+  width: 110px;
+  height: 110px;
+}
+
+.battle-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
+  transition: transform 0.5s ease, opacity 0.3s ease;
+  transform: scale(0) rotate(-30deg);
+  opacity: 0;
+}
+
+.battle-img.show {
+  transform: scale(1) rotate(0deg);
+  opacity: 1;
+}
+
+.battle-img.hidden {
+  display: block; /* keep space, but invisible */
+  opacity: 0;
+  transform: scale(0) rotate(-30deg);
+}
+
+.battle-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  background: var(--bg-card-light);
+  border-radius: 50%;
+  color: var(--text-muted);
+  border: 2px dashed var(--border);
+  transition: opacity 0.3s ease;
+}
+
+.battle-placeholder.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.vs-badge {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--accent);
+  background: rgba(247,201,72,0.15);
+  border: 2px solid rgba(247,201,72,0.3);
+  border-radius: 50%;
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.round-result {
+  text-align: center;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  transition: background var(--transition), color var(--transition);
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.round-result.win  { background: rgba(124,92,191,0.25); color: var(--purple-light); border-color: var(--purple); }
+.round-result.lose { background: rgba(255,107,107,0.2); color: var(--accent-coral); border-color: var(--accent-coral); }
+.round-result.tie  { background: rgba(247,201,72,0.15); color: var(--accent);       border-color: var(--accent); }
+
+
+.slider-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem 1rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.slider-instructions {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* ---------- The viewport window ---------- */
+.slider-wrapper {
+  width: 100%;
+  overflow: hidden;/* hides the slides that are off-screen */
+  border-radius: 14px;
+}
+
+/*
+  ---------- The TRACK ----------
+*/
+.slider-track {
+  display: flex;                   /* lay slides in a row */
+  width: 300%;                    /* 3 slides × 100% each = 300% total */
+  transform: translateX(0%);       /* start at slide 0 */
+  transition: transform 0.45s ease-in;
+}
+
+
+
+/* ---------- Individual slide ---------- */
+.slide {
+  width: 33%;  /* each slide is 1/3 of the track */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1.2rem 1rem;
+  cursor: pointer;
+  border-radius: 14px;
+  transition: background var(--transition);
+}
+
+.slide.active-slide {
+  background: rgba(124,92,191,0.15);
+}
+
+.slide-img {
+  width: 160px;
+  height: 160px;
+  object-fit: contain;
+  /* A subtle float animation so the slide feels alive */
+  /* animation: float 3s ease-in-out infinite; */
+  transition: transform var(--transition);
+  filter: drop-shadow(0 8px 20px rgba(124,92,191,0.4));
+}
+
+/* Each slide gets a slightly different float delay */
+/* .slide:nth-child(1) .slide-img { animation-delay: 0s; }
+.slide:nth-child(2) .slide-img { animation-delay: 0.5s; }
+.slide:nth-child(3) .slide-img { animation-delay: 1s; } */
+
+/* @keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50%       { transform: translateY(-10px) rotate(3deg); }
+} */
+
+.slide-label {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--text-main);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* ---------- Dot indicators ---------- */
+.slider-dots {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: none;
+  background: var(--bg-card-light);
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition);
+  padding: 0;
+}
+
+.dot.active {
+  background: var(--purple-light);
+  transform: scale(1.4);
+}
+
+/* ---------- Arrow buttons ---------- */
+.slider-arrows {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.arrow-btn {
+  background: var(--bg-card-light);
+  border: 1px solid var(--border);
+  color: var(--text-main);
+  font-size: 1.3rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.arrow-btn:hover {
+  background: var(--purple);
+  transform: scale(1.1);
+}
+
+.arrow-btn:active {
+  transform: scale(0.95);
+}
+
+/* ---------- Play button ---------- */
+.play-btn {
+  background: linear-gradient(135deg, var(--purple), var(--purple-light));
+  color: #fff;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  padding: 0.75rem 1.8rem;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 20px rgba(124,92,191,0.5);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.play-btn:hover {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 8px 30px rgba(124,92,191,0.7);
+}
+
+.play-btn:active {
+  transform: translateY(0) scale(0.97);
+}
+
+.play-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ============================================================
+   END-GAME MODAL
+   ============================================================ */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 12, 29, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+
+  /* Hidden by default */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.modal-backdrop.visible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 3rem 2.5rem;
+  text-align: center;
+  max-width: 380px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+
+  /* Slides up from below when visible */
+  transform: translateY(40px) scale(0.95);
+  transition: transform 0.4s ease-in;
+}
+
+.modal-backdrop.visible .modal {
+  transform: translateY(0) scale(1);
+}
+
+.modal-icon {
+  font-size: 4rem;
+  margin-bottom: 0.5rem;
+  animation: bounceIn 0.6s ease 0.3s both;
+}
+
+@keyframes bounceIn {
+  0%   { transform: scale(0) rotate(-20deg); opacity: 0; }
+  60%  { transform: scale(1.2) rotate(5deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+.modal-title {
+  font-size: 2rem;
+  font-weight: 900;
+  margin-bottom: 0.4rem;
+}
+
+.modal-title.win  { color: var(--purple-light); }
+.modal-title.lose { color: var(--accent-coral); }
+.modal-title.tie  { color: var(--accent); }
+
+.modal-sub {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 1.2rem;
+}
+
+.modal-scores {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  margin-bottom: 1.8rem;
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+#modal-player-score   { color: var(--purple-light); }
+#modal-computer-score { color: var(--accent-coral); }
+
+.play-again-btn {
+  background: linear-gradient(135deg, var(--accent), #f7a831);
+  color: #0f0c1d;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 900;
+  padding: 0.85rem 2.5rem;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: transform var(--transition), box-shadow var(--transition);
+  box-shadow: 0 4px 20px rgba(247,201,72,0.4);
+}
+
+.play-again-btn:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 30px rgba(247,201,72,0.6);
+}
+
+.play-again-btn:active {
+  transform: translateY(0) scale(0.97);
+}
+
+
+.hidden {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}

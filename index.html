@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rock Paper Scissors</title>
+    <meta name="description" content="Play Rock Paper Scissors against the computer – best of 5!" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+
+    <!-- ===== HEADER ===== -->
+    <header class="site-header">
+      <h1 class="site-title">✊ Rock Paper Scissors</h1>
+      <p class="site-subtitle">Best of 5 — may the best hand win!</p>
+    </header>
+
+    <!-- ===== MAIN GAME AREA ===== -->
+    <main class="game-container">
+
+      <!-- SCORE BOARD -->
+      <section class="scoreboard">
+        <div class="score-card" id="player-score-card">
+          <span class="score-label">You</span>
+          <span class="score-number" id="player-score">0</span>
+        </div>
+
+        <div class="round-tracker">
+          <span class="round-label">Round</span>
+          <span class="round-number" id="round-number">1</span>
+          <span class="round-label">of 5</span>
+        </div>
+
+        <div class="score-card" id="computer-score-card">
+          <span class="score-label">Computer</span>
+          <span class="score-number" id="computer-score">0</span>
+        </div>
+      </section>
+
+      <!-- BATTLE AREA (shows both choices after a round) -->
+      <section class="battle-area" id="battle-area">
+        <div class="battle-side" id="player-battle">
+          <p class="battle-label">Your Pick</p>
+          <div class="battle-image-wrapper">
+            <img src="" alt="" id="player-battle-img" class="battle-img hidden" />
+            <div class="battle-placeholder" id="player-placeholder">?</div>
+          </div>
+        </div>
+
+        <div class="vs-badge">VS</div>
+
+        <div class="battle-side" id="computer-battle">
+          <p class="battle-label">Computer Pick</p>
+          <div class="battle-image-wrapper">
+            <img src="" alt="" id="computer-battle-img" class="battle-img hidden" />
+            <div class="battle-placeholder" id="computer-placeholder">?</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ROUND RESULT MESSAGE -->
+      <div class="round-result" id="round-result">
+        <p id="round-result-text">Choose your weapon below!</p>
+      </div>
+
+      <!-- ===== SLIDER SECTION ===== -->
+      <section class="slider-section">
+        <p class="slider-instructions">← Slide to pick, then click!</p>
+
+        <!-- The slider track + the 3 slides inside -->
+        <div class="slider-wrapper" id="slider-wrapper">
+          <div class="slider-track" id="slider-track">
+
+            <!-- SLIDE 0: Rock -->
+            <div class="slide">
+              <img src="rock.png" alt="Rock – closed fist" class="slide-img" />
+              <span class="slide-label">Rock</span>
+            </div>
+
+            <!-- SLIDE 1: Paper -->
+            <div class="slide">
+              <img src="paper.png" alt="Paper – open hand" class="slide-img" />
+              <span class="slide-label">Paper</span>
+            </div>
+
+            <!-- SLIDE 2: Scissors -->
+            <div class="slide">
+              <img src="scissors.png" alt="Scissors – V sign" class="slide-img" />
+              <span class="slide-label">Scissors</span>
+            </div>
+
+          </div><!-- /slider-track -->
+        </div><!-- /slider-wrapper -->
+
+        <!-- Dot indicators -->
+        <div class="slider-dots" id="slider-dots">
+          <button class="dot active" id="dot-0"></button>
+          <button class="dot" id="dot-1"></button>
+          <button class="dot" id="dot-2"></button>
+        </div>
+
+        <!-- Prev / Next arrows -->
+        <div class="slider-arrows">
+          <button class="arrow-btn" id="prev-btn">&#8592;</button>
+          <button class="play-btn" id="play-btn">
+            Play this Round!
+          </button>
+          <button class="arrow-btn" id="next-btn">&#8594;</button>
+        </div>
+
+      </section>
+      <!-- /slider-section -->
+
+    </main>
+    <!-- /game-container -->
+
+    <!-- ===== END-GAME MODAL ===== -->
+    <div class="modal-backdrop" id="modal-backdrop">
+      <div class="modal" id="result-modal">
+        <div class="modal-icon" id="modal-icon">🏆</div>
+        <h2 class="modal-title" id="modal-title">You Win!</h2>
+        <p class="modal-sub" id="modal-sub">Final score: You 3 – Computer 2</p>
+        <div class="modal-scores">
+          <span id="modal-player-score">You: 0</span>
+          <span id="modal-computer-score">Computer: 0</span>
+        </div>
+        <button class="play-again-btn" id="play-again-btn">Play Again</button>
+      </div>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
