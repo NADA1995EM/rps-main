@@ -1,4 +1,4 @@
-// First component Score board
+// First component < Score board >
 
 let playerScoreEl = document.querySelector("#player-score");
 let computerScoreEl = document.querySelector("#computer-score");
@@ -56,11 +56,19 @@ playBtn.addEventListener("click", function (){
     currentRound++;
     showBattelImgs(humanChoice,computerChoice);
        showRoundResult(winner,humanChoice,computerChoice);
+       if(currentRound===5){
+        playBtn.disabled=true;
+        setTimeout(function(){
+            showModal();},1500)}
+        
+       setTimeout(function(){
+        resetButtelImge();}
+       ,2000)
 
 });
 
 
-//Second component pattel imgs
+//Second component < pattel imgs >
 
 let playButtelImg =document.querySelector("#player-battle-img");
 let playerPlaceHolder = document.querySelector("#player-placeholder");
@@ -82,32 +90,32 @@ computerButtelImg.classList.add("show");
 computerPlaceHolder.classList.add("hidden");
 }
 
-//Thierd component  ROUND RESULT MESSAGE 
+//Thierd component  < ROUND RESULT MESSAGE >
 
-let RoundResultEl = document.querySelector("#round-result");
+let roundResultEl = document.querySelector("#round-result");
 let roundResultText = document.querySelector("#round-result-text");
 
 
 
 function showRoundResult(winner,humanChoice,computerChoice){
-    RoundResultEl.classList.remove("tie","lose","win")
+    roundResultEl.classList.remove("tie","lose","win")
     let massege ="";
     if( winner === "tie"){
         massege="🤝 It,s a tie ! both chose "+ humanChoice;
-        RoundResultEl.classList.add("tie");
+        roundResultEl.classList.add("tie");
     }
     else if( winner === "human"){
         massege="✅ You win this round ! "+ humanChoice + "  bits  "+ computerChoice;
-             RoundResultEl.classList.add("win");
+             roundResultEl.classList.add("win");
                 }
     else {
         massege="❌ computer wins  this round !" + computerChoice + "  bits  " + humanChoice; 
-         RoundResultEl.classList.add("lose");
+         roundResultEl.classList.add("lose");
 }
      roundResultText.textContent= massege;
 };
 
-//Forth component slide traker
+//Forth component < slide traker >
 
 let nextBtn = document.querySelector("#next-btn");
 let prevBtn = document.querySelector("#prev-btn");
@@ -150,3 +158,66 @@ function updateDots(activeIndex){
         goToslide(i);
     })
  }
+
+
+ //Fifth component < Mosal back drop >
+ let modalBackdrop =document.querySelector("#modal-backdrop");
+  let modalIcon=document.querySelector("#modal-icon");
+   let modalTitel =document.querySelector("#modal-title");
+    let modalSubTitel=document.querySelector("#modal-sub");
+     let modalPlayerScore=document.querySelector("#modal-player-score");
+      let modalComputerScore=document.querySelector("#modal-computer-score");
+       let playAgainBtn=document.querySelector("#play-again-btn");
+
+       function showModal(){
+        modalTitel.classList.remove("win","lose","tie");
+        modalBackdrop.classList.add("visible");
+        if(playerScore<computerScore){
+            modalIcon.textContent="❌";
+           modalTitel.textContent="You Lost!";
+           modalTitel.classList="lose";
+           modalSubTitel.textContent="Better luck next time!";
+
+        }
+        else if(playerScore>computerScore){
+            modalIcon.textContent="🏆";
+           modalTitel.textContent="You Win!";
+           modalTitel.classList="win";
+           modalSubTitel.textContent="Amazing job! You beat computer!";
+
+        }
+        else{
+             modalIcon.textContent="🫱🏼‍🫲🏻";
+           modalTitel.textContent="It's a Draw!";
+           modalTitel.classList="tie";
+           modalSubTitel.textContent="Perfectly balanced!";
+
+        }
+        modalPlayerScore.textContent="Player : "+playerScore;
+                modalComputerScore.textContent="Computer : "+ computerScore;
+
+       };
+
+       playAgainBtn.addEventListener("click",function(){
+         playerScore = 0;
+         computerScore = 0;
+         currentRound = 1;
+
+        updateScoreboard();
+        modalBackdrop.classList.remove("visible");
+         resetButtelImge();
+      
+            roundResultEl.classList.remove("win","lose","tie");
+                roundResultText.textContent="Choose your weapon below!";
+         
+ 
+       })
+function resetButtelImge(){
+       playButtelImg.classList.remove("shwo");
+            computerButtelImg.classList.remove("shwo");
+            playerPlaceHolder.classList.remove("hidden");
+            computerPlaceHolder.classList.remove("hidden");
+                    playBtn.disabled=false;
+
+
+}
